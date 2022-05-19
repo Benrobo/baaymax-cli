@@ -28,13 +28,12 @@ async function initBaayMax() {
     print("")
     print(msg1)
     print(msg2)
-    // const isUserInfoCollected = await askUserInfo()
-    // const isUserSkillsCollected = await askForUserSkills()
-
-    saveData()
-
-    // if (isUserInfoCollected) {
-    // }
+    
+    const isUserInfoCollected = await askUserInfo()
+    
+    if (isUserInfoCollected) {
+        const isUserSkillsCollected = await askForUserSkills()
+    }
 }
 
 // init

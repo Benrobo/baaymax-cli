@@ -14,6 +14,7 @@ const figlet = require("figlet")
 const {print, wait} = require("./utils/index.js")
 const gradient = require("gradient-string")
 const { createSpinner } = require("nanospinner")
+const {saveData} = require("./utils/saveData.js")
 
 // create spinner
 const spinner = createSpinner();
@@ -245,10 +246,11 @@ async function askUserInfo() {
     spinner.start({text: "Saving Data..."})
 
     // save users data to a json file
+    const isDataSaved = saveData(JSON.stringify(answers), "usersInfo.json")
 
-    await wait(1)
-    // stop spinner
-    spinner.success({text: "Information saved successfully"})
+    if(isDataSaved)
+        await wait(2)
+        spinner.success({text: "Information saved successfully"})
 
     return true
 }
@@ -472,16 +474,16 @@ async function askForUserSkills() {
         }
     ]
 
-    // save users data
-
-    print(usersSkills)
     print("")
 
     // start spinner
     spinner.start({text: "Saving Skill"})
-    await wait(1)
-    // stop spinner
-    spinner.success({text: "Skills information saved"})
+
+    const isDataSaved = saveData(JSON.stringify(usersSkills), "skills.json")
+
+    if(isDataSaved)
+        await wait(2)
+        spinner.success({text: "Information saved successfully"})
 
     return true
 }
