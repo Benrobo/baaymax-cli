@@ -3,7 +3,6 @@
   "version": "1.0.0",
   "description": "BaayMax Script",
   "main": "./src/index.js",
-  "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node ./src/index.js"
@@ -23,9 +22,16 @@
   },
   "homepage": "https://github.com/Benrobo/baaymax-script#readme",
   "dependencies": {
-    "chalk": "^5.0.1",
-    "chalk-animation": "^2.0.2",
+    "chalk": "^4.1.2",
+    "chalk-animation": "^1.0.2",
     "figlet": "^1.5.2",
-    "inquire": "^0.4.8"
+    "gradient-string": "^2.0.1",
+    "i": "^0.3.7",
+    "inquirer": "^8.2.4",
+    "nanospinner": "^1.1.0",
+    "npm": "^8.10.0"
+  },
+  "bin": {
+    "baaymax": "./src/index.js"
   }
 }
