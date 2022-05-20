@@ -27,7 +27,7 @@ const inquirer = require("inquirer")
 
 const cwd = process.cwd
 
-const BAAYMAX_URL = `https://github.com/Benrobo/baaymax.git`
+const BAAYMAX_URL = `https://github.com/Benrobo/baaymax-cli.git`
 
 let title = figlet.textSync(" BaayMax", { font: "Big Money-sw" })
 
