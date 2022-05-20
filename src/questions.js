@@ -22,7 +22,7 @@ const spinner = createSpinner();
 
 // Collect users data
 
-async function askUserInfo() {
+async function askUserInfo(projectName="baaymax") {
 
     print("")
     print("")
@@ -74,7 +74,7 @@ async function askUserInfo() {
         },
         {
             type: "input",
-            name: "intro_tag_line",
+            name: "intro_tagline",
             message: "Enter your intro tagline: eg (inspiring fullstack engineer..) ",
             validate: (inp) => {
                 let error;
@@ -94,7 +94,7 @@ async function askUserInfo() {
         },
         {
             type: "input",
-            name: "subtagline",
+            name: "subTitle",
             message: "Enter your sub_tagline: eg (think, create, design...) ",
             validate: (inp) => {
                 let error;
@@ -221,7 +221,7 @@ async function askUserInfo() {
         },
         {
             type: "input",
-            name: "bio",
+            name: "bio_desc",
             message: "Enter a short description about yourself : ",
             validate: (inp) => {
                 let error;
@@ -242,21 +242,25 @@ async function askUserInfo() {
     usersBiosDescription.push(answers.bio)
 
     answers.bio = usersBiosDescription
+
+    print("\n")
+
     // start spinner
-    spinner.start({text: "Saving Data..."})
+    spinner.start({text: "Saving Skill"})
 
-    // save users data to a json file
-    const isDataSaved = saveData(JSON.stringify(answers), "usersInfo.json")
+    const {error, msg} = saveData(JSON.stringify(answers), "usersInfo.json", projectName)
 
-    if(isDataSaved)
+    if(error === false){
         await wait(2)
-        spinner.success({text: "Information saved successfully"})
-
-    return true
+        spinner.success({text: chalk.cyanBright(msg)})
+        return true
+    }
+    spinner.error({text: chalk.redBright(msg)})
+    return false
 }
 
 
-async function askForUserSkills() {
+async function askForUserSkills(projectName="baaymax") {
 
     print("")
     print("")
@@ -456,40 +460,83 @@ async function askForUserSkills() {
     ]
 
     const answers = await inquire.prompt(questions)
-    const usersSkills = [
-        {
-            name: answers.skill1,
-            description: answers.skill1_desc,
-            projects_completed: answers.skill1_project_completed,
-        },
-        {
-            name: answers.skill2,
-            description: answers.skill2_desc,
-            projects_completed: answers.skill2_project_completed,
-        },
-        {
-            name: answers.skill3,
-            description: answers.skill3_desc,
-            projects_completed: answers.skill3_project_completed,
-        }
-    ]
+    const usersSkills = {
+        skill: [
+            {
+                name: answers.skill1,
+                description: answers.skill1_desc,
+                projects_completed: answers.skill1_project_completed,
+            },
+            {
+                name: answers.skill2,
+                description: answers.skill2_desc,
+                projects_completed: answers.skill2_project_completed,
+            },
+            {
+                name: answers.skill3,
+                description: answers.skill3_desc,
+                projects_completed: answers.skill3_project_completed,
+            }
+        ]
+    }
 
-    print("")
+    print("\n")
 
     // start spinner
     spinner.start({text: "Saving Skill"})
 
-    const isDataSaved = saveData(JSON.stringify(usersSkills), "skills.json")
+    const {error, msg} = saveData(JSON.stringify(usersSkills), "skills.json", projectName)
 
-    if(isDataSaved)
+    if(error === false){
         await wait(2)
-        spinner.success({text: "Information saved successfully"})
+        spinner.success({text: chalk.cyanBright(msg)})
+        return true
+    }
+    spinner.error({text: chalk.redBright(msg)})
+    return false
+}
 
-    return true
+async function addOtherImportantData(projectName){
+    const languages = {
+        languages: [
+            "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/go/go-original-wordmark.svg",
+            "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg",
+            "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg"
+        ]
+    }
+
+    const socials = {
+        socials:{
+            facebook: "https://web.facebook.com/benaiah.alumona.5/",
+            github:"https://github.com/benrobo",
+            instagram:"https://instagram.com/_benrobo",
+            twitter:"https://twitter.com/benaiah_al",
+            email:"alumonabenaiah71@gmail.com"
+        }
+    }
+
+    print("\n")
+
+    // start spinner
+    spinner.start({text: "Saving other important data"})
+
+    // save language data
+    const langRes = saveData(JSON.stringify(languages), "languages.json", projectName)
+    // save socials
+    const socialRes = saveData(JSON.stringify(socials), "socials.json", projectName)
+
+    if(langRes.error === false && socialRes.error === false){
+        await wait(2)
+        spinner.success({text: chalk.cyanBright(langRes.msg)})
+        return true
+    }
+    spinner.error({text: chalk.redBright(langRes.msg)})
+    return false
 }
 
 
 module.exports = {
     askUserInfo,
-    askForUserSkills
+    askForUserSkills,
+    addOtherImportantData
 }

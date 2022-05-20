@@ -6,17 +6,20 @@ const chalk  = require("chalk")
 
 const cwd = process.cwd()
 
-function saveData(payload="", filename="test.json"){
+function saveData(payload="", filename="test.json", projectName){
+
+    let res = {}
 
     // check if the folder baaymax exists where this script is been executed
-    const isBaayMaxExists = fs.existsSync(`${cwd}/baaymax`)
+    const isBaayMaxExists = fs.existsSync(`${cwd}/${projectName}`)
 
-    const dataFolder = `${cwd}/baaymax/data/`
+    const dataFolder = `${cwd}/${projectName}/data/`
 
     // check if the main baaymax folder exists
     if (isBaayMaxExists === false) {
-        print("")
-        return print(chalk.redBright("Something went wrong, data could not be saved."))
+        res["error"] = true;
+        res["msg"] = `Something went wrong, ${chalk.bgRed(projectName)} folder wasnt found.`
+        return res
     }
 
     // check if the4 data folder exists, if not create a new one
@@ -29,10 +32,14 @@ function saveData(payload="", filename="test.json"){
         // create file 
         fs.writeFileSync(`${dataFolder}/${filename}`, `${payload}`)
 
-        return true
+        res["error"] = false;
+        res["msg"] = "Data saved successfully."
+        return res
     }
     catch (err){
-        print(err.message)
+        res["error"] = true;
+        res["msg"] = err.message
+        return res
     }
 }
 
