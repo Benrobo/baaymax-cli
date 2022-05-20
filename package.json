@@ -1,7 +1,7 @@
 {
-  "name": "baaymax-script",
+  "name": "baaymax",
   "version": "1.0.0",
-  "description": "BaayMax Script: generate unique, intuitive portfolio sites for developer.",
+  "description": "BaayMax CLI: generate unique, intuitive portfolio sites for developer.",
   "main": "./src/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
