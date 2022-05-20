@@ -1,6 +1,6 @@
 {
   "name": "baaymax",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "BaayMax CLI: generate unique, intuitive portfolio sites for developer.",
   "main": "./src/index.js",
   "scripts": {
