@@ -11,10 +11,10 @@ const inquire = require("inquirer")
 const chalk = require("chalk")
 const chalkAnimation = require("chalk-animation")
 const figlet = require("figlet")
-const {print, wait} = require("./utils/index.js")
+const { print, wait } = require("./utils/index.js")
 const gradient = require("gradient-string")
 const { createSpinner } = require("nanospinner")
-const {saveData} = require("./utils/saveData.js")
+const { saveData } = require("./utils/saveData.js")
 
 // create spinner
 const spinner = createSpinner();
@@ -22,11 +22,11 @@ const spinner = createSpinner();
 
 // Collect users data
 
-async function askUserInfo(projectName="baaymax") {
+async function askUserInfo(projectName = "baaymax") {
 
     print("")
     print("")
-    print(gradient("cyan", "blue")(figlet.textSync("ROUND 1", {font: "Old Banner"})))
+    print(gradient("cyan", "blue")(figlet.textSync("ROUND 1", { font: "Old Banner" })))
     print("")
 
     await wait(1)
@@ -166,7 +166,7 @@ async function askUserInfo(projectName="baaymax") {
         },
         {
             type: "input",
-            name: "skill",
+            name: "user_skill",
             message: "What your skill (eg Software Engineering): ",
             validate: (inp) => {
                 let error;
@@ -181,7 +181,7 @@ async function askUserInfo(projectName="baaymax") {
         },
         {
             type: "input",
-            name: "quote",
+            name: "favorites_quote",
             message: "What your favorite quote phrase? ",
             validate: (inp) => {
                 let error;
@@ -239,32 +239,32 @@ async function askUserInfo(projectName="baaymax") {
     const usersBiosDescription = []
     const answers = await inquire.prompt(questions)
 
-    usersBiosDescription.push(answers.bio)
+    usersBiosDescription.push(answers.bio_desc)
 
-    answers.bio = usersBiosDescription
+    answers.bio_desc = usersBiosDescription
 
     print("\n")
 
     // start spinner
-    spinner.start({text: "Saving Skill"})
+    spinner.start({ text: "Saving Skill" })
 
-    const {error, msg} = saveData(JSON.stringify(answers), "usersInfo.json", projectName)
+    const { error, msg } = saveData(JSON.stringify(answers), "usersInfo.json", projectName)
 
-    if(error === false){
+    if (error === false) {
         await wait(2)
-        spinner.success({text: chalk.cyanBright(msg)})
+        spinner.success({ text: chalk.cyanBright(msg) })
         return true
     }
-    spinner.error({text: chalk.redBright(msg)})
+    spinner.error({ text: chalk.redBright(msg) })
     return false
 }
 
 
-async function askForUserSkills(projectName="baaymax") {
+async function askForUserSkills(projectName = "baaymax") {
 
     print("")
     print("")
-    print(gradient("cyan", "blue")(figlet.textSync("ROUND 2", {font: "Old Banner"})))
+    print(gradient("cyan", "blue")(figlet.textSync("ROUND 2", { font: "Old Banner" })))
     print("")
 
     await wait(1)
@@ -483,20 +483,20 @@ async function askForUserSkills(projectName="baaymax") {
     print("\n")
 
     // start spinner
-    spinner.start({text: "Saving Skill"})
+    spinner.start({ text: "Saving Skill" })
 
-    const {error, msg} = saveData(JSON.stringify(usersSkills), "skills.json", projectName)
+    const { error, msg } = saveData(JSON.stringify(usersSkills), "skills.json", projectName)
 
-    if(error === false){
+    if (error === false) {
         await wait(2)
-        spinner.success({text: chalk.cyanBright(msg)})
+        spinner.success({ text: chalk.cyanBright(msg) })
         return true
     }
-    spinner.error({text: chalk.redBright(msg)})
+    spinner.error({ text: chalk.redBright(msg) })
     return false
 }
 
-async function addOtherImportantData(projectName){
+async function addOtherImportantData(projectName) {
     const languages = {
         languages: [
             "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/go/go-original-wordmark.svg",
@@ -506,31 +506,31 @@ async function addOtherImportantData(projectName){
     }
 
     const socials = {
-        socials:{
+        socials: {
             facebook: "https://web.facebook.com/benaiah.alumona.5/",
-            github:"https://github.com/benrobo",
-            instagram:"https://instagram.com/_benrobo",
-            twitter:"https://twitter.com/benaiah_al",
-            email:"alumonabenaiah71@gmail.com"
+            github: "https://github.com/benrobo",
+            instagram: "https://instagram.com/_benrobo",
+            twitter: "https://twitter.com/benaiah_al",
+            email: "alumonabenaiah71@gmail.com"
         }
     }
 
     print("\n")
 
     // start spinner
-    spinner.start({text: "Saving other important data"})
+    spinner.start({ text: "Saving other important data" })
 
     // save language data
     const langRes = saveData(JSON.stringify(languages), "languages.json", projectName)
     // save socials
     const socialRes = saveData(JSON.stringify(socials), "socials.json", projectName)
 
-    if(langRes.error === false && socialRes.error === false){
+    if (langRes.error === false && socialRes.error === false) {
         await wait(2)
-        spinner.success({text: chalk.cyanBright(langRes.msg)})
+        spinner.success({ text: chalk.cyanBright(langRes.msg) })
         return true
     }
-    spinner.error({text: chalk.redBright(langRes.msg)})
+    spinner.error({ text: chalk.redBright(langRes.msg) })
     return false
 }
 
