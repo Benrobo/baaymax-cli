@@ -97,7 +97,7 @@ async function startQuestioneer(projectName) {
 
         if (parsedOut.includes("git") || parsedOut.includes("version")) {
             // clone baymax repo
-            const command = `git clone ${BAAYMAX_URL} ${projectName}`
+            const command = `git clone ${BAAYMAX_URL} ${projectName} && cd ${projectName} && git remote rm origin`
 
             spinner.start({ text: "cloning baaymax.." })
 
